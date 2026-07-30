@@ -57,6 +57,8 @@ Pipeline được chia thành 3 notebook tương ứng với 3 giai đoạn củ
 - **Cutoff analysis:** dựng bảng approval rate / bad rate theo từng ngưỡng điểm, xác định điểm gãy (breakpoint) nơi bad rate không còn ổn định do mẫu quá nhỏ.
 - **Model Validation:** đánh giá discriminatory power (Gini, KS) trên cả 3 tập train/validation/test, kiểm tra decile bad rate có giảm dần đơn điệu (monotonic) hay không.
 - **Population Shift Sensitivity Analysis:** kiểm tra xem model có chịu được danh mục trong tương lai khi các khách hàng rủi ro cao tăng lên hay không. Tạo ra các kịch bản có thể xảy ra trong tương lai
+
+
 **Output:** model logistic cuối cùng (37 biến) + bảng điểm scorecard + báo cáo validation.
 
 ---
