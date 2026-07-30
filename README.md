@@ -1,4 +1,8 @@
-## 📓 Notebooks
+## 📓 CREEDIT RISK MODELING
+
+An end-to-end credit risk scoring system built using the Home Credit Default Risk dataset. The project follows the core principles of the Basel Internal Ratings-Based (IRB) Approach, including Probability of Default (PD) modeling, discriminatory power evaluation, probability calibration, and model stability testing.
+
+Dự án xây dựng MÔ HÌNH HÓA RỦI RO TÍN DỤNG sử dụng tập dữ liệu từ Home Credit Default Risk. Dự án này thực hiện mô phỏng theo dự án tại một ngân hàng thực bao cồm phần Xác xuất rủi ro vỡ nợ được mô hình hóa, đánh giá khả năng phân biệt, khả năng hiệu chỉnh (calibration) và tính ổn định qua những chỉ số đánh giá của ngành và đánh giá lại mô hình dưới các dạng phân bố khác với phân bố gốc.
 
 Pipeline được chia thành 3 notebook tương ứng với 3 giai đoạn của quy trình xây dựng PD Scorecard: **Feature Engineering → Fine Classing/WOE → Model Development & Validation**. Mỗi notebook nhận input từ notebook trước và xuất ra dataset cho notebook sau.
 
