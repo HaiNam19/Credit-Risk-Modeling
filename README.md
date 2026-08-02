@@ -1,4 +1,6 @@
-## 📓 Notebooks
+## 📓 CREDIT RISK MODELING
+
+Dự án xây dựng MÔ HÌNH HÓA RỦI RO TÍN DỤNG sử dụng tập dữ liệu từ Home Credit Default Risk. Dự án này thực hiện mô phỏng theo dự án tại một ngân hàng thực bao cồm phần Xác xuất rủi ro vỡ nợ được mô hình hóa, đánh giá khả năng phân biệt, khả năng hiệu chỉnh (calibration) và tính ổn định qua những chỉ số đánh giá của ngành và đánh giá lại mô hình dưới các dạng phân bố khác với phân bố gốc.
 
 Pipeline được chia thành 3 notebook tương ứng với 3 giai đoạn của quy trình xây dựng PD Scorecard: **Feature Engineering → Fine Classing/WOE → Model Development & Validation**. Mỗi notebook nhận input từ notebook trước và xuất ra dataset cho notebook sau.
 
@@ -57,6 +59,8 @@ Pipeline được chia thành 3 notebook tương ứng với 3 giai đoạn củ
 - **Cutoff analysis:** dựng bảng approval rate / bad rate theo từng ngưỡng điểm, xác định điểm gãy (breakpoint) nơi bad rate không còn ổn định do mẫu quá nhỏ.
 - **Model Validation:** đánh giá discriminatory power (Gini, KS) trên cả 3 tập train/validation/test, kiểm tra decile bad rate có giảm dần đơn điệu (monotonic) hay không.
 - **Population Shift Sensitivity Analysis:** kiểm tra xem model có chịu được danh mục trong tương lai khi các khách hàng rủi ro cao tăng lên hay không. Tạo ra các kịch bản có thể xảy ra trong tương lai
+
+
 **Output:** model logistic cuối cùng (37 biến) + bảng điểm scorecard + báo cáo validation.
 
 ---
