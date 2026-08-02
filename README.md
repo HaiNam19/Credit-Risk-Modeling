@@ -1,6 +1,8 @@
 ## 📓 CREDIT RISK MODELING
 
-Dự án xây dựng MÔ HÌNH HÓA RỦI RO TÍN DỤNG sử dụng tập dữ liệu từ Home Credit Default Risk. Dự án này thực hiện mô phỏng theo dự án tại một ngân hàng thực bao cồm phần Xác xuất rủi ro vỡ nợ được mô hình hóa, đánh giá khả năng phân biệt, khả năng hiệu chỉnh (calibration) và tính ổn định qua những chỉ số đánh giá của ngành và đánh giá lại mô hình dưới các dạng phân bố khác với phân bố gốc.
+Dự án xây dựng MÔ HÌNH HÓA RỦI RO TÍN DỤNG sử dụng tập dữ liệu từ Home Credit Default Risk. Dự án này thực hiện mô phỏng theo dự án tại một ngân hàng thực bao gồm phần Xác xuất rủi ro vỡ nợ được mô hình hóa, đánh giá khả năng phân biệt, khả năng hiệu chỉnh (calibration) và tính ổn định qua những chỉ số đánh giá của ngành và đánh giá lại mô hình dưới các dạng phân bố khác với phân bố gốc.
+
+Output mong muốn là tạo ra một model có thể phân biệt được khách hàng có khả năng vỡ nợ trong tương lai hay không. Đồng thời cũng cần mang tính giải thích cao, ứng với từng khách hàng sẽ có tưng điểm số và những thành phần tạo nên điểm số cuối (ứng với từng biến (feature) sẽ có điểm để cộng dồn và ra điểm số cuối).
 
 Pipeline được chia thành 3 notebook tương ứng với 3 giai đoạn của quy trình xây dựng PD Scorecard: **Feature Engineering → Fine Classing/WOE → Model Development & Validation**. Mỗi notebook nhận input từ notebook trước và xuất ra dataset cho notebook sau.
 
@@ -73,11 +75,11 @@ Pipeline được chia thành 3 notebook tương ứng với 3 giai đoạn củ
 
 **Discriminatory power (Gini / KS):**
 
-| Dataset | Gini | KS |
-|---------|------|-----|
-| Train | 0.522 | 0.391 |
-| Validation | 0.521 | 0.388 |
-| Test | 0.520 | 0.395 |
+| Dataset | Gini | KS | AUC
+|---------|------|-----|-----| 
+| Train | 0.522 | 0.391 | 0.761 |
+| Validation | 0.521 | 0.388 | 0.7605 |
+| Test | 0.520 | 0.395 | 0.759 |
 
 → Gini ổn định quanh 0.52 trên cả 3 tập, không có dấu hiệu overfitting rõ rệt (chênh lệch train/test < 0.01). Và như đã nói ở phần "Lưu ý kỹ thuật" của Feature Engineering, các kết quả này vô tình không còn nhiều đáng tin do việc chia dữ liệu
 
@@ -87,3 +89,18 @@ Pipeline được chia thành 3 notebook tương ứng với 3 giai đoạn củ
 
 **Model behavior:**
 - Bad rate giảm đơn điệu qua từng decile điểm số (cả ở tập Train và tập Test), đúng như kỳ vọng của một scorecard hoạt động tốt.
+
+**Population Shift Sensitivity Analysis:**
+- Kịch bản 1: Nếu tương lai có nhiều khách hàng trẻ, thời gian làm việc ngắn, khoản trả góp định kỳ lớn hơn, tỉ lệ khoản vay trên giá trị tài sản lớn hơn, và số lần nộp hồ sơ tín dụng trong 12 tháng gần đây cũng tăng nhanh hơn thì model sẽ thể nào
+    - Ta tạo ra một phân bố khách hàng mới với bad rate của danh mục tăng ~ 3%
+    - Gini và AUC lần lượt là 0.526 và 0.763
+    - Hiệu chỉnh (calibration) vẫn logic, bad rate giảm dần qua từng nhóm khách hàng được chia theo điểm tín dụng (credit_score)
+      → Model làm tốt trên kịch bản 1
+
+- Kịch bản 2: Nếu tương lai, phân bố khách hàng tập trung nhiều vào các khách hàng có điểm tín dụng (credit_score) quanh ngưỡng điểm bình thường, ngân hàng muốn thu hút những khách hàng có rủi ro trung bình nhiều hơn
+    - Ta tạo ra phân bố khách hàng mới với độ lệch chuẩn giảm từ 29 -> 22 và bad rate giảm từ 8% -> 6%
+    - Gini và AUC lần lượt là 0.43 và 0.71
+    - Hiệu chỉnh vẫn logic, bad rate giảm dần qua từng nhóm khách hàng
+      → Model có sự giảm AUC nhưng vẫn trong phạm vi phù hợp đối với model logistics
+
+Mục này chỉ chỉ ra rằng khi các khách hàng ta đã quan sát, thay đổi mật độ tần xuất từ đó kéo theo phân bố bị lệch trái (phải) hoặc phương sai tăng thì model sẽ phản ứng ra sao thông qua các chỉ số đánh giá. Ta không hề tạo ra khách hàng mới mà chỉ lấy trùng khách hàng cũ và lặp lại với tỉ trọng lớn hơn để cố gắng thay đổi phân bố.
